@@ -2,7 +2,6 @@
 require_once 'Pessoa.php';
 
 class Aluno extends Pessoa {
-    private $matricula;
     private $curso;
     private $fase;
     private $totalHoras;
@@ -12,10 +11,6 @@ class Aluno extends Pessoa {
     }
 
     // Getters e Setters
-    public function setMatricula($matricula) {
-        $this->matricula = $matricula;
-    }
-
     public function setCurso($curso) {
         $this->curso = $curso;
     }
@@ -26,10 +21,6 @@ class Aluno extends Pessoa {
 
     public function setTotalHoras($totalHoras) {
         $this->totalHoras = $totalHoras;
-    }
-
-    public function getMatricula() {
-        return $this->matricula;
     }
 
     public function getCurso() {
@@ -67,30 +58,5 @@ class Aluno extends Pessoa {
             ':fase' => $this->fase,
             ':total_horas' => $this->totalHoras
         ]);
-    }
-
-    // Buscar aluno por ID
-    public function buscarPorId($id) {
-        $query = "SELECT u.*, a.matricula, a.curso, a.fase, a.total_horas
-                  FROM usuarios u
-                  JOIN alunos a ON u.id = a.id
-                  WHERE u.id = :id";
-        $stmt = $this->db->prepare($query);
-        $stmt->execute([':id' => $id]);
-
-        $dados = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($dados) {
-            $this->id = $dados['id'];
-            $this->nome = $dados['nome'];
-            $this->email = $dados['email'];
-            $this->isAdmin = $dados['is_admin'];
-            $this->matricula = $dados['matricula'];
-            $this->curso = $dados['curso'];
-            $this->fase = $dados['fase'];
-            $this->totalHoras = $dados['total_horas'];
-            return true;
-        }
-
-        return false;
     }
 }

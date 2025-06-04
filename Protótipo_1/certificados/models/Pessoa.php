@@ -3,9 +3,10 @@
 class Pessoa {
     protected $db;
     protected $id;
+    private $matricula;
     protected $nome;
     protected $cpf;
-    protected $email; // Novo atributo
+    protected $email;
     protected $senhaHash;
     protected $isAdmin;
 
@@ -16,6 +17,10 @@ class Pessoa {
     // Getters e Setters
     public function setId($id) {
         $this->id = $id;
+    }
+
+    public function setMatricula($matricula) {
+        $this->matricula = $matricula;
     }
 
     public function setNome($nome) {
@@ -41,6 +46,10 @@ class Pessoa {
     public function getId() {
         return $this->id;
     }
+
+    public function getMatricula() {
+        return $this->matricula;
+    }   
 
     public function getNome() {
         return $this->nome;
@@ -83,11 +92,29 @@ class Pessoa {
             $this->id = $usuario['id'];
             $this->nome = $usuario['nome'];
             $this->cpf = $usuario['cpf'];
-            $this->email = $usuario['email']; // Atualiza o email também
+            $this->email = $usuario['email'];
             $this->isAdmin = $usuario['is_admin'];
             return true;
         }
 
         return false;
+    }
+
+    // Método para visualizar perfil
+    public function visualizarPerfil() {
+        if (!$this->id) {
+            throw new Exception("ID do usuário não definido.");
+        }
+    
+        $query = "SELECT id, nome, cpf, email, matricula, is_admin 
+                  FROM usuarios 
+                  WHERE id = :id 
+                  LIMIT 1";
+    
+        $stmt = $this->db->prepare($query);
+        $stmt->execute([':id' => $this->id]);
+    
+        $perfil = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $perfil ?: null;
     }
 }

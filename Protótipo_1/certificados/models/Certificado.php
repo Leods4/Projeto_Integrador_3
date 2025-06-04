@@ -115,6 +115,16 @@ class Certificado {
         ]);
     }
 
+    // Alterar horas do certificado
+    public function alterarCargaHoraria($novaCargaHoraria) {
+        $query = "UPDATE certificados SET carga_horaria = :cargaHoraria WHERE id = :id";
+        $stmt = $this->db->prepare($query);
+        return $stmt->execute([
+            ':cargaHoraria' => $novaCargaHoraria,
+            ':id' => $this->id
+        ]);
+    }
+
     // Alterar categoria do certificado
     public function alterarCategoria($novaCategoria) {
         $query = "UPDATE certificados SET categoria = :categoria WHERE id = :id";
@@ -125,13 +135,24 @@ class Certificado {
         ]);
     }
 
+    // Alterar observação do certificado
+    public function alterarObservacao($novaObservacao) {
+        $query = "UPDATE certificados SET observacao = :observacao WHERE id = :id";
+        $stmt = $this->db->prepare($query);
+        return $stmt->execute([
+            ':observacao' => $novaObservacao,
+            ':id' => $this->id
+        ]);
+    }
+    
+
     // Validação simples de formato do arquivo
     public function validarFormato() {
         $extensao = pathinfo($this->arquivo, PATHINFO_EXTENSION);
         return strtolower($extensao) === 'pdf';
     }
 
-    // (Opcional) buscar certificados de um aluno
+    // Buscar certificados por aluno
     public function listarPorAluno($alunoId) {
         $query = "SELECT * FROM certificados WHERE requerente_id = :id ORDER BY data_criacao DESC";
         $stmt = $this->db->prepare($query);
@@ -139,8 +160,26 @@ class Certificado {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // (Opcional) define o ID do certificado (necessário para alterações)
-    public function setId($id) {
-        $this->id = $id;
+    // Buscar certificados por curso
+    public function listarPorCurso($curso) {
+        $query = "SELECT * FROM certificados WHERE curso = :curso ORDER BY data_criacao DESC";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute([':curso' => $curso]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Buscar certificados por data
+    public function listarPorData($dataInicio, $dataFim) {
+        $query = "SELECT * FROM certificados 
+                  WHERE data_criacao BETWEEN :dataInicio AND :dataFim 
+                  ORDER BY data_criacao DESC";
+    
+        $stmt = $this->db->prepare($query);
+        $stmt->execute([
+            ':dataInicio' => $dataInicio,
+            ':dataFim' => $dataFim
+        ]);
+    
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
