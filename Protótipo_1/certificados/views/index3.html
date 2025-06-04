@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Histórico de Horas</title>
+  <link rel="stylesheet" href="style3.css">
+</head>
+<body>
+    <header>
+        <a href="#">
+        <img src="home-icon.png" alt="Ícone home" />
+            Início
+        </a>
+        <h1>Sistema de Horas Complementares FMP</h1>
+        <a href="#">
+          <img src="logout-icon.png" alt="Ícone sair" />
+          Sair
+        </a>
+      </header>
+
+      <main>
+        <section class="content">
+          <div class="section-header">
+            <h2>Histórico de Horas</h2>
+            <div class="filters">
+              <label>Nome:
+                <input type="text" class="input-small">
+              </label>
+              <label>Curso:
+                <select>
+                  <option>Selecionar</option>
+                  <option>ADM</option>
+                  <option>ADS</option>
+                  <option>PED</option>
+                  <option>TPG</option>
+                </select>
+              </label>
+              <label>Período:
+                <input type="date">
+              </label>
+              <button class="btn">Filtrar</button>
+              <button class="btn-outline">Remover filtro</button>
+            </div>
+          </div>
+    
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Matrícula</th>
+                  <th>Aluno</th>
+                  <th>Curso</th>
+                  <th>Fase</th>
+                  <th>Tipo de Hora</th>
+                  <th>Horas Atribuídas</th>
+                  <th>Tempo de Requisição</th>
+                  <th>Situação</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td colspan="8"></td></tr>
+                <tr class="alt"><td colspan="8"></td></tr>
+                <tr><td colspan="8"></td></tr>
+                <tr class="alt"><td colspan="8"></td></tr>
+                <tr><td colspan="8"></td></tr>
+                <tr class="alt"><td colspan="8"></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    
+      <footer>
+        <div>3ª Fase de ADS</div>
+        <div>Alunos: Leonardo de Oliveira, Maria Eduarda Schmidt e Philipe da Silva</div>
+        <div id="ano-atual">2025/AnoAtual</div>
+        <img src="logo-fmp.png" alt="Logo FMP" class="logo-footer" />
+      </footer>
+    </body>
+    </html>
