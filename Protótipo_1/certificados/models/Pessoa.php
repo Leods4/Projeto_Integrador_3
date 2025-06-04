@@ -4,7 +4,8 @@ class Pessoa {
     protected $db;
     protected $id;
     protected $nome;
-    protected $email;
+    protected $cpf;
+    protected $email; // Novo atributo
     protected $senhaHash;
     protected $isAdmin;
 
@@ -19,6 +20,10 @@ class Pessoa {
 
     public function setNome($nome) {
         $this->nome = $nome;
+    }
+
+    public function setCpf($cpf) {
+        $this->cpf = $cpf;
     }
 
     public function setEmail($email) {
@@ -41,6 +46,10 @@ class Pessoa {
         return $this->nome;
     }
 
+    public function getCpf() {
+        return $this->cpf;
+    }
+
     public function getEmail() {
         return $this->email;
     }
@@ -51,28 +60,30 @@ class Pessoa {
 
     // Métodos principais
     public function salvar() {
-        $query = "INSERT INTO usuarios (nome, email, senha_hash, is_admin) 
-                  VALUES (:nome, :email, :senha_hash, :is_admin)";
+        $query = "INSERT INTO usuarios (nome, cpf, email, senha_hash, is_admin) 
+                  VALUES (:nome, :cpf, :email, :senha_hash, :is_admin)";
         $stmt = $this->db->prepare($query);
         return $stmt->execute([
             ':nome' => $this->nome,
+            ':cpf' => $this->cpf,
             ':email' => $this->email,
             ':senha_hash' => $this->senhaHash,
             ':is_admin' => $this->isAdmin
         ]);
     }
 
-    public function autenticar($email, $senha) {
-        $query = "SELECT * FROM usuarios WHERE email = :email LIMIT 1";
+    public function autenticar($cpf, $senha) {
+        $query = "SELECT * FROM usuarios WHERE cpf = :cpf LIMIT 1";
         $stmt = $this->db->prepare($query);
-        $stmt->execute([':email' => $email]);
+        $stmt->execute([':cpf' => $cpf]);
 
         $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($usuario && password_verify($senha, $usuario['senha_hash'])) {
             // Preenche atributos
             $this->id = $usuario['id'];
             $this->nome = $usuario['nome'];
-            $this->email = $usuario['email'];
+            $this->cpf = $usuario['cpf'];
+            $this->email = $usuario['email']; // Atualiza o email também
             $this->isAdmin = $usuario['is_admin'];
             return true;
         }
