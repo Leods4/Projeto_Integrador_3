@@ -3,7 +3,7 @@
 class Pessoa {
     protected $db;
     protected $id;
-    private $matricula;
+    protected $matricula;
     protected $nome;
     protected $cpf;
     protected $email;

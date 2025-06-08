@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../core/Database.php';
 
 class Certificado {
     private $db;
@@ -181,5 +182,27 @@ class Certificado {
         ]);
     
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+     public static function listarTodos() {
+        $db = Database::conectar();
+        $stmt = $db->query("SELECT * FROM certificados");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function criar($dados) {
+        $db = Database::conectar();
+        $stmt = $db->prepare("INSERT INTO certificados (nome, descricao, carga_horaria) VALUES (?, ?, ?)");
+        return $stmt->execute([
+            $dados['nome'] ?? '',
+            $dados['descricao'] ?? '',
+            $dados['carga_horaria'] ?? 0
+        ]);
+    }
+
+    public static function deletar($id) {
+        $db = Database::conectar();
+        $stmt = $db->prepare("DELETE FROM certificados WHERE id = ?");
+        return $stmt->execute([$id]);
     }
 }
