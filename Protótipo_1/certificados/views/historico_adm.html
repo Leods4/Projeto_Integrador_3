@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Histórico de Horas</title>
+  <link rel="stylesheet" href="historico_validar.css">
+</head>
+<body>
+  <header>
+    <div class="left">
+      <a href="inicio_alunos.html">
+        <img src="home-icon.png" alt="Início" />
+        Início
+      </a>
+    </div>
+  
+    <div class="center">
+      <h1>Sistema de Horas Complementares FMP</h1>
+    </div>
+  
+    <div class="right">
+      <a href="logout.html">
+        <img src="logout-icon.png" alt="Sair" />
+        Sair
+      </a>
+    </div>
+  </header>
+  
+  <div class="section-header">
+    <form class="filters" method="POST" action="/seu-controller-aqui">
+      <h2>Histórico de Horas</h2>
+      <label>Nome:
+        <input type="text" name="nome" class="input-small" />
+      </label>
+      <label>Matrícula:
+        <input type="text" name="matricula" class="input-small" />
+      </label>
+      <label>Fase:
+        <select name="fase">
+          <option value="">Selecionar</option>
+          <option value="1ª">1ª</option>
+          <option value="2ª">2ª</option>
+          <option value="3ª">3ª</option>
+          <option value="4ª">4ª</option>
+          <option value="5ª">5ª</option>
+          <option value="6ª">6ª</option>
+          <option value="7ª">7ª</option>
+          <option value="8ª">8ª</option>
+        </select>
+      </label>
+      <label>Curso:
+        <select name="curso">
+          <option value="">Selecionar</option>
+          <option value="ADM">ADM</option>
+          <option value="ADS">ADS</option>
+          <option value="PED">PED</option>
+          <option value="TPG">TPG</option>
+        </select>
+      </label>
+      <label>Período:
+        <input type="month" name="periodo" />
+      </label>
+      <button type="submit" class="btn">Filtrar</button>
+      <button type="reset" class="btn-outline">Remover filtros</button>
+    </form>
+  </div>
+  
+  <main>
+    <section class="content">
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Matrícula</th>
+              <th>Aluno</th>
+              <th>Fase</th>
+              <th>Curso</th>
+              <th>Área</th>
+              <th>Tipo</th>
+              <th>Nome</th>
+              <th>Horas</th>
+              <th>Período</th>
+              <th>Observação</th>
+              <th>Situação</th>
+              <th>Download</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="alt">
+              <td>12</td>
+              <td>6780</td>
+              <td>Ana Gabriela da Silva</td>
+              <td>3ª</td>
+              <td>ADS</td>
+              <td>Científico-Acadêmica</td>
+              <td>Curso</td>
+              <td>Curso Banco de Dados II</td>
+              <td>12</td>
+              <td>06/2025</td>
+              <td>Curso Online</td>
+              <td><span class="status-label entregue">ENTREGUE</span></td>
+              <td><a href="arquivo.pdf" download><img src="download-icon.png" alt="Ícone download" /></a></td>
+            </tr>
+            <!-- mais linhas aqui -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  
+  <footer>
+    <div>3ª Fase de ADS</div>
+    <div>Alunos: Leonardo de Oliveira, Maria Eduarda Schmidt e Philipe da Silva</div>
+    <div id="ano-atual">2025/AnoAtual</div>
+    <img src="logo-fmp.png" alt="Logo FMP" class="logo-footer" />
+  </footer>
+
+  <script>
+    const ano = new Date().getFullYear();
+    document.getElementById("ano-atual").textContent = `2025/${ano}`;
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const selects = document.querySelectorAll('.status-select');
+    
+      selects.forEach(select => {
+        function updateColorClass() {
+          select.classList.remove('aprovado', 'reprovado', 'entregue');
+          const valor = select.value.toUpperCase();
+          if (valor === 'APROVADO') {
+            select.classList.add('aprovado');
+          } else if (valor === 'REPROVADO') {
+            select.classList.add('reprovado');
+          } else if (valor === 'ENTREGUE') {
+            select.classList.add('entregue');
+          }
+        }
+    
+        select.addEventListener('change', updateColorClass);
+        updateColorClass();
+      });
+    });
+  </script>      
+  
+</body>
+</html>
