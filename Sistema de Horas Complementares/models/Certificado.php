@@ -1,5 +1,6 @@
 <?php
-require_once __DIR__ . '/../core/Database.php';
+
+require_once 'Database.php';
 
 class Certificado {
     private PDO $db;
@@ -155,38 +156,58 @@ class Certificado {
     }
 
     public function listarPorFiltros(array $filtros): array {
-        $sql = "SELECT * FROM certificados WHERE 1=1";
+        $sql = "
+            SELECT certificados.*,
+                   usuarios.nome AS nome_aluno,
+                   usuarios.matricula,
+                   alunos.fase
+            FROM certificados
+            INNER JOIN alunos ON certificados.requerente_id = alunos.id
+            INNER JOIN usuarios ON alunos.id = usuarios.id
+            WHERE 1=1
+        ";
         $params = [];
-
-        if (!empty($filtros['aluno_id'])) {
-            $sql .= " AND requerente_id = :aluno_id";
-            $params[':aluno_id'] = $filtros['aluno_id'];
+    
+        if (!empty($filtros['nome'])) {
+            $sql .= " AND usuarios.nome LIKE :nome";
+            $params[':nome'] = '%' . $filtros['nome'] . '%';
         }
-
+    
+        if (!empty($filtros['matricula'])) {
+            $sql .= " AND usuarios.matricula = :matricula";
+            $params[':matricula'] = $filtros['matricula'];
+        }
+    
+        if (!empty($filtros['fase'])) {
+            $sql .= " AND alunos.fase = :fase";
+            $params[':fase'] = $filtros['fase'];
+        }
+    
         if (!empty($filtros['curso'])) {
-            $sql .= " AND curso = :curso";
+            $sql .= " AND certificados.curso = :curso";
             $params[':curso'] = $filtros['curso'];
         }
-
+    
         if (!empty($filtros['data_inicio']) && !empty($filtros['data_fim'])) {
-            $sql .= " AND data_criacao BETWEEN :data_inicio AND :data_fim";
+            $sql .= " AND certificados.data_criacao BETWEEN :data_inicio AND :data_fim";
             $params[':data_inicio'] = $filtros['data_inicio'];
             $params[':data_fim'] = $filtros['data_fim'];
         } elseif (!empty($filtros['data_inicio'])) {
-            $sql .= " AND data_criacao >= :data_inicio";
+            $sql .= " AND certificados.data_criacao >= :data_inicio";
             $params[':data_inicio'] = $filtros['data_inicio'];
         } elseif (!empty($filtros['data_fim'])) {
-            $sql .= " AND data_criacao <= :data_fim";
+            $sql .= " AND certificados.data_criacao <= :data_fim";
             $params[':data_fim'] = $filtros['data_fim'];
         }
-
-        $sql .= " ORDER BY data_criacao DESC";
-
+    
+        $sql .= " ORDER BY certificados.data_criacao DESC";
+    
         $stmt = $this->db->prepare($sql);
         $stmt->execute($params);
-
+    
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    
 
 
     // 🔹 Métodos estáticos

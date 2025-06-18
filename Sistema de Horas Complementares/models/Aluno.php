@@ -1,5 +1,7 @@
 <?php
+
 require_once 'Pessoa.php';
+require_once 'Database.php';
 
 class Aluno extends Pessoa {
     private ?string $curso = null;

@@ -1,5 +1,7 @@
 <?php
 
+require_once 'Database.php';
+
 class Gerenciamento {
     private PDO $db;
 

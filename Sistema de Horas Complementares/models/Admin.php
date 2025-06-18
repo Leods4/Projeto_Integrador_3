@@ -1,5 +1,7 @@
 <?php
+
 require_once 'Pessoa.php';
+require_once 'Database.php';
 
 class Admin extends Pessoa {
     private ?string $tipoAdministrador = null;

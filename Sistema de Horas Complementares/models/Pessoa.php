@@ -1,5 +1,7 @@
 <?php
 
+require_once 'Database.php';
+
 class Pessoa {
     protected PDO $db;
     protected ?int $id = null;
@@ -10,8 +12,14 @@ class Pessoa {
     protected ?string $senhaHash = null;
     protected bool $isAdmin = false;
 
-    public function __construct(PDO $db) {
-        $this->db = $db;
+    public function __construct(?PDO $db = null) {
+        // Usa a conexão do Database caso nenhuma seja passada
+        $this->db = $db ?? Database::conectar();
+    }
+
+    // Método de fábrica para facilitar criação
+    public static function novaInstancia(): self {
+        return new self(Database::conectar());
     }
 
     // Setters
@@ -28,8 +36,11 @@ class Pessoa {
     }
 
     public function setCpf(string $cpf): void {
-        // Validação simples de CPF pode ser adicionada aqui
-        $this->cpf = trim($cpf);
+        $cpf = preg_replace('/[^0-9]/', '', $cpf);
+        if (!preg_match('/^\d{11}$/', $cpf)) {
+            throw new InvalidArgumentException("CPF inválido.");
+        }
+        $this->cpf = $cpf;
     }
 
     public function setEmail(string $email): void {
@@ -80,7 +91,7 @@ class Pessoa {
         ";
         $stmt = $this->db->prepare($query);
 
-        return $stmt->execute([
+        $resultado = $stmt->execute([
             ':matricula' => $this->matricula,
             ':nome' => $this->nome,
             ':cpf' => $this->cpf,
@@ -88,9 +99,17 @@ class Pessoa {
             ':senha_hash' => $this->senhaHash,
             ':is_admin' => $this->isAdmin ? 1 : 0
         ]);
+
+        if ($resultado) {
+            $this->id = (int)$this->db->lastInsertId();
+        }
+
+        return $resultado;
     }
 
     public function autenticar(string $cpf, string $senha): bool {
+        $cpf = preg_replace('/[^0-9]/', '', $cpf);
+
         $query = "SELECT * FROM usuarios WHERE cpf = :cpf LIMIT 1";
         $stmt = $this->db->prepare($query);
         $stmt->execute([':cpf' => $cpf]);
@@ -119,7 +138,27 @@ class Pessoa {
         $stmt = $this->db->prepare($query);
         $stmt->execute([':id' => $this->id]);
 
-        $perfil = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $perfil ?: null;
+        return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+    }
+
+    public function carregarPorId(int $id): bool {
+        $query = "SELECT * FROM usuarios WHERE id = :id LIMIT 1";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute([':id' => $id]);
+
+        $usuario = $stmt->fetch();
+
+        if ($usuario) {
+            $this->id = (int)$usuario['id'];
+            $this->matricula = $usuario['matricula'];
+            $this->nome = $usuario['nome'];
+            $this->cpf = $usuario['cpf'];
+            $this->email = $usuario['email'];
+            $this->senhaHash = $usuario['senha_hash'];
+            $this->isAdmin = (bool)$usuario['is_admin'];
+            return true;
+        }
+
+        return false;
     }
 }
