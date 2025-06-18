@@ -1,0 +1,141 @@
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #1e2c66;
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  header {
+    background-color: white;
+    padding: 10px 40px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+
+  header .left,
+  header .right {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+  }
+
+  header .left.invisible {
+    visibility: hidden;
+  }
+
+  header .center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  header .center h1 {
+    font-size: 1.6em;
+    font-weight: bold;
+    white-space: nowrap;
+    margin: 0 auto;
+    pointer-events: auto;
+  }
+
+  header a {
+    text-decoration: none;
+    font-size: 1.2em;
+    color: black;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+  }
+
+  header a img {
+    height: 20px;
+    width: 20px;
+    margin-right: 6px;
+    object-fit: contain;
+  }
+
+  main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    background-color: #1e2c66;
+  }
+
+  .profile-box {
+    background-color: white;
+    padding: 40px 60px;
+    border-radius: 10px;
+    height: 500px;
+    width: 90%;
+    max-width: 1000px;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .profile-box h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 24px;
+    color: #000000;
+    font-weight: lighter;
+    padding: 40px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .form-line {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  label {
+    padding: 20px;
+    width: 290px;
+    font-size: 18px;
+    color: #000000;
+  }
+
+  input[type="text"] {
+    flex: 1;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #aaa;
+    border-radius: 6px;
+    background-color: #f8f8f8;
+    color: #555;
+  }
+
+  input[disabled] {
+    background-color: #f8f8f8;
+    color: #555;
+  }
+
+  footer {
+    background-color: #eaeaea;
+    font-size: 0.80em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2px 25px;
+    border-top: 2px solid #ccc;
+  }
+
+  .logo-footer {
+    height: 25px;
+  }
