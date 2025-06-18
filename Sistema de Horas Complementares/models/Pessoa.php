@@ -134,7 +134,7 @@ class Pessoa {
             throw new RuntimeException("ID do usuário não definido.");
         }
 
-        $query = "SELECT id, nome, cpf, email, matricula, is_admin FROM usuarios WHERE id = :id LIMIT 1";
+        $query = "SELECT nome, email, matricula FROM usuarios WHERE id = :id LIMIT 1";
         $stmt = $this->db->prepare($query);
         $stmt->execute([':id' => $this->id]);
 
