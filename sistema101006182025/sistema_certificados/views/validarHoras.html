@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Validação de Horas</title>
+  <link rel="stylesheet" href="/sistema_certificados/public/historico_validar.css">
+</head>
+<body>
+  <header>
+    <div class="left">
+      <a href="inicio_alunos.html">
+        <img src="/sistema_certificados/public/home-icon.png" alt="Início" />
+        Início
+      </a>
+    </div>
+    <div class="center">
+      <h1>Sistema de Horas Complementares FMP</h1>
+    </div>
+    <div class="right">
+      <a href="login.html">
+        <img src="/sistema_certificados/public/logout-icon.png" alt="Sair" />
+        Sair
+      </a>
+    </div>
+  </header>  
+
+  <div class="section-header">
+    <div class="filters">
+      <h2>Validação de Horas</h2>
+      <label>Nome:
+        <input type="text" class="input-small">
+      </label>
+      <label>Matrícula:
+        <input type="text" class="input-small">
+      </label>
+      <label>Fase:
+        <select>
+          <option>Selecionar</option>
+          <option>1ª</option>
+          <option>2ª</option>
+          <option>3ª</option>
+          <option>4ª</option>
+          <option>5ª</option>
+          <option>6ª</option>
+          <option>7ª</option>
+          <option>8ª</option>
+        </select>
+      </label>
+      <label>Curso:
+        <select>
+          <option>Selecionar</option>
+          <option>ADM</option>
+          <option>ADS</option>
+          <option>PED</option>
+          <option>TPG</option>
+        </select>
+      </label>
+      <label>Período:
+        <input type="month">
+      </label>
+      <button class="btn">Filtrar</button>
+      <button class="btn-outline">Remover filtros</button>
+    </div>
+  </div>
+
+  <main>
+    <section class="content">
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Matrícula</th>
+              <th>Aluno</th>
+              <th>Fase</th>
+              <th>Curso</th>
+              <th>Área</th>
+              <th>Tipo</th>
+              <th>Nome</th>
+              <th>Horas</th>
+              <th>Período</th>
+              <th>Observação</th>
+              <th>Situação</th>
+              <th>Download</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="alt">
+              <td>12</td>
+              <td>6780</td>
+              <td>3ª</td>
+              <td>ADS</td>
+              <td>Ana Gabriela da Silva</td>
+              <td>
+                <select class="area-select">
+                  <option>selecionar</option>
+                  <option>Sociocultural</option>
+                  <option>Prática Profissional</option>
+                  <option>Científico-Acadêmica</option>
+                </select>
+              </td>
+              <td><input type="text" name="tipo" class="input-small"></td>
+              <td>Curso Online</td>
+              <td><input type="int" class="input-small"></td>
+              <td>06/2025</td>
+              <td><input type="text" name="observacao" class="input-medium"></td>
+              <td>
+                <select class="status-select">
+                  <option value="ENTREGUE">ENTREGUE</option>
+                  <option value="APROVADO">APROVADO</option>
+                  <option value="REPROVADO">REPROVADO</option>
+                  <option value="APROVADO COM RESSALVAS">APROVADO COM RESSALVAS</option>
+                </select>                    
+              </td>
+              <td><a href="arquivo.pdf" download><img src="/sistema_certificados/public/download-icon.png" alt="Ícone download" /></a></td>
+            </tr>
+            <!-- Linhas vazias de preenchimento -->
+            <tr><td colspan="13"></td></tr>
+            <tr class="alt"><td colspan="13"></td></tr>
+            <tr><td colspan="13"></td></tr>
+            <tr class="alt"><td colspan="13"></td></tr>
+            <tr><td colspan="13"></td></tr>
+            <tr class="alt"><td colspan="13"></td></tr>
+            <tr><td colspan="13"></td></tr>
+            <tr class="alt"><td colspan="13"></td></tr>
+            <tr><td colspan="13"></td></tr>
+            <tr class="alt"><td colspan="13"></td></tr>
+            <tr><td colspan="13"></td></tr>
+            <tr class="alt"><td colspan="13"></td></tr>
+            <tr><td colspan="13"></td></tr>
+            <tr class="alt"><td colspan="13"></td></tr>
+            <tr><td colspan="13"></td></tr>
+            <tr class="alt"><td colspan="13"></td></tr>
+            <tr><td colspan="13"></td></tr>
+            <tr class="alt"><td colspan="13"></td></tr>
+            <tr><td colspan="13"></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div>3ª Fase de ADS</div>
+    <div>Alunos: Leonardo de Oliveira, Maria Eduarda Schmidt e Philipe da Silva</div>
+    <div id="ano-atual">2025/AnoAtual</div>
+    <img src="/sistema_certificados/public/logo-fmp.png" alt="Logo FMP" class="logo-footer" />
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const selects = document.querySelectorAll('.status-select');
+
+      selects.forEach(select => {
+        function updateColorClass() {
+          select.classList.remove('aprovado', 'reprovado', 'entregue', 'aprovado-ressalvas');
+          const valor = select.value.toUpperCase();
+          if (valor === 'APROVADO') {
+            select.classList.add('aprovado');
+          } else if (valor === 'REPROVADO') {
+            select.classList.add('reprovado');
+          } else if (valor === 'ENTREGUE') {
+            select.classList.add('entregue');
+          } else if (valor === 'APROVADO COM RESSALVAS') {
+            select.classList.add('aprovado-ressalvas');
+          }
+        }
+
+        select.addEventListener('change', updateColorClass);
+        updateColorClass();
+      });
+    });
+  </script>      
+
+</body>
+</html>

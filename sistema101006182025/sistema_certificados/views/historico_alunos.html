@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Histórico de Horas</title>
+  <link rel="stylesheet" href="/sistema_certificados/public/historico_validar.css">
+</head>
+<body>
+  <header>
+    <div class="left">
+      <a href="inicio_alunos.html">
+        <img src="/sistema_certificados/public/home-icon.png" alt="Início" />
+        Início
+      </a>
+    </div>
+  
+    <div class="center">
+      <h1>Sistema de Horas Complementares FMP</h1>
+    </div>
+  
+    <div class="right">
+      <a href="logout.html">
+        <img src="/sistema_certificados/public/logout-icon.png" alt="Sair" />
+        Sair
+      </a>
+    </div>
+  </header>
+
+          <div class="section-header">
+            <div class="filters">
+              <h2>Histórico de Horas</h2>
+              <label>Período:
+                <input type="month">
+              </label>
+              <button class="btn">Filtrar</button>
+              <button class="btn-outline">Remover filtro</button>
+            </div>
+          </div>
+    
+      <main>
+        <section class="content">
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Área</th>
+                  <th>Tipo</th>
+                  <th>Nome</th>
+                  <th>Horas Atribuídas</th>
+                  <th>Período</th>
+                  <th>Situação</th>
+                  <th>Download</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="alt">
+                  <td>12</td>
+                  <td><option>Científico-Acadêmica</option></td>
+                  <td>Curso</td>
+                  <td>Curso Banco de Dados II</td>
+                  <td>12</td>
+                  <td>06/2025</td>
+                  <td><span class="status-label entregue">ENTREGUE</span></td>
+                  <td><a href="arquivo.pdf" download><img src="/sistema_certificados/public/download-icon.png" alt="Ícone download" /></a></td>
+                </tr>
+                
+                <tr><td colspan="8"></td></tr>
+                <tr class="alt"><td colspan="8"></td></tr>
+                <tr><td colspan="8"></td></tr>
+                <tr class="alt"><td colspan="8"></td></tr>
+                <tr><td colspan="8"></td></tr>
+                <tr class="alt"><td colspan="8"></td></tr>
+                <tr><td colspan="8"></td></tr>
+                <tr class="alt"><td colspan="8"></td></tr>
+                <tr><td colspan="8"></td></tr>
+                <tr class="alt"><td colspan="8"></td></tr>
+                <tr><td colspan="8"></td></tr>
+                <tr class="alt"><td colspan="8"></td></tr>
+                <tr><td colspan="8"></td></tr>
+                <tr class="alt"><td colspan="8"></td></tr>
+                <tr><td colspan="8"></td></tr>
+                <tr class="alt"><td colspan="8"></td></tr>
+                <tr><td colspan="8"></td></tr>
+                <tr class="alt"><td colspan="8"></td></tr>
+                <tr><td colspan="8"></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    
+      <footer>
+        <div>3ª Fase de ADS</div>
+        <div>Alunos: Leonardo de Oliveira, Maria Eduarda Schmidt e Philipe da Silva</div>
+        <div id="ano-atual">2025/AnoAtual</div>
+        <img src="/sistema_certificados/public/logo-fmp.png" alt="Logo FMP" class="logo-footer" />
+      </footer>
+
+      <script>
+        const ano = new Date().getFullYear();
+        document.getElementById("ano-atual").textContent = `2025/${ano}`;
+
+        document.addEventListener('DOMContentLoaded', function () {
+          const selects = document.querySelectorAll('.status-select');
+        
+          selects.forEach(select => {
+            function updateColorClass() {
+              select.classList.remove('aprovado', 'reprovado', 'entregue');
+              const valor = select.value.toUpperCase();
+              if (valor === 'APROVADO') {
+                select.classList.add('aprovado');
+              } else if (valor === 'REPROVADO') {
+                select.classList.add('reprovado');
+              } else if (valor === 'ENTREGUE') {
+                select.classList.add('entregue');
+              }
+            }
+        
+            select.addEventListener('change', updateColorClass);
+            updateColorClass();
+          });
+        });
+        
+      </script>      
+      
+    </body>
+    </html>
