@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Perfil</title>
+  <link rel="stylesheet" href="/sistema_certificados/public/perfil.css" />
+</head>
+<body>
+  <header>
+    <div class="left">
+      <a href="inicio_alunos.html">
+        <img src="/sistema_certificados/public/home-icon.png" alt="Início" />
+        Início
+      </a>
+    </div>
+  
+    <div class="center">
+      <h1>Sistema de Horas Complementares FMP</h1>
+    </div>
+  
+    <div class="right">
+      <a href="../logout.php">
+        <img src="/sistema_certificados/public/logout-icon.png" alt="Sair" />
+        Sair
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <div class="profile-box">
+      <h2>Perfil do Aluno</h2>
+      <form>
+        <div class="form-line">
+          <label for="nome">Nome Completo:</label>
+          <input type="text" id="nome" value="Nome do Aluno" disabled />
+        </div>
+        <div class="form-line">
+          <label for="email">E-mail Acadêmico:</label>
+          <input type="text" id="email" value="E-mail do Aluno" disabled />
+        </div>
+        <div class="form-line">
+          <label for="matricula">Matrícula:</label>
+          <input type="text" id="matricula" value="Matrícula do Aluno" disabled />
+        </div>
+        <div class="form-line">
+          <label for="curso">Curso:</label>
+          <input type="text" id="curso" value="Curso do Aluno" disabled />
+        </div>
+        <div class="form-line">
+          <label for="fase">Fase:</label>
+          <input type="text" id="fase" value="Fase do Aluno" disabled />
+        </div>
+        <div class="form-line">
+          <label for="total_horas">Total de Horas Válidas:</label>
+          <input type="text" id="total_horas" value="0" disabled />
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <footer>
+    <div>3ª Fase de ADS</div>
+    <div>Alunos: Leonardo de Oliveira, Maria Eduarda Schmidt e Philipe Jean da Silva</div>
+    <div id="ano-atual"></div>
+    <img src="/sistema_certificados/public/logo-fmp.png" alt="Logo FMP" class="logo-footer" />
+  </footer>
+
+  <script>
+    document.getElementById("ano-atual").textContent = `2025/${new Date().getFullYear()}`;
+  </script>
+</body>
+</html> 
